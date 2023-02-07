@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int minimumRecolors(string blocks, int k) {
+        int i=0,j=0,m=INT_MAX;
+        int w=0,b=0;                       // Initialize two variables to store the count.
+        while(j<blocks.length()){
+            if(blocks[j]=='W') w++;        // Count number of white and black.
+            else b++;
+            if(j-i+1<k) j++;               // Check window size.
+            else{
+                m=min(m,w);                // Calculate the minimumm of white to produce the reqired answer.
+                if(blocks[i]=='W') w--;    // Increasing the window size as if the removed elememt i.e ith element is w or b and decrese one occurence accordingly.
+                else b--;
+                i++;
+                j++;
+            }
+        }
+        return m;                           // Return result as m.
+    }
+};
