@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        int i=0,j=0;
+        vector<int> ans;
+        list<int> v;                                              // Initialize a list to store the elements.
+        while(j<nums.size()){
+            while(!v.empty() && v.back()<nums[j]) v.pop_back();  // check if the list is empty for the base case and if the next number is greater than the elements                                                                      present in the list, then they can never become the maximum since they are already smaller than this                                                                        hence remove them.
+            v.push_back(nums[j]);                               // Else push the element in the list as a possible maximum.
+             
+            if(j-i+1<k) j++;                                    //check window size.
+            else{
+                ans.push_back(v.front());                      // The front element will always be the maximmum element for that particular window as all the remaining                                                                    values are either removed or are smaller than the front element.
+                if(nums[i]==v.front()) v.pop_front();         // if the front element is ith element the pop that from list so as to increase the window size and                                                                         remove it's calculations.
+                i++;
+                j++;
+            }
+        }
+        return ans;                                           // Return the vector containing every maximum.
+    }
+};
+
+/* The main catch of the problem is to store the maximum element of the array 
+
+for eg consider array to be [1,3,-1,-3,5] and k=3 and max=0
+so considering the sliding window concept of size 3 the first window will be [1,3,-1] so maximum will be 3 and we remove 1 from the window as well as 
+all its calculations (as in this case 1 doesn't affect in any way).
+
+if you further increase the window size the new window will be [3,-1,-3] so current max will be 3 and all its calculations will be removed i.e the maximum value will no longer exist in the max variable.
+
+so upon further increaing the window size there's no way to find the maximum as no value to compare with.
+
+To overcome this problem we will use list instead of a variable that will store all the possible maximums i.e considering the element j all the values to it's right are 
+possible maximum for the next window and on the left are of no use.
+*/
+
+// Hope you understand the solution, if not then fee free to leave a comment.
