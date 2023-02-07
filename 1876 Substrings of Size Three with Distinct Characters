@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int countGoodSubstrings(string s) {
+        int i=0,count=0;                    //Inititalize a variable i and counter to store to count of good strings.
+        unordered_map<char,int>u_map;       // create an unordered map to store the occurences of the characters.
+        for(int j=0;j<s.size();++j){
+            u_map[s[j]]++;                  // Increase the count for the character in the map.
+            if(j-i+1==3){                   // if Window size becomes the three
+                if(u_map.size()==3)         // if map contains 3 values that means we have encountered three distinct characters.
+                    count++;
+                    u_map[s[i]]--;          // Decrease one occurence of the ith value to slide the window forward.
+            if(u_map[s[i]]==0)              // if any element's occurence becomes zero remove that element from the map.
+                u_map.erase(s[i]);
+            i++;
+            }
+        }
+        return count;
+    }
+};
