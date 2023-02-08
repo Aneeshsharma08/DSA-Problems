@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int maxVowels(string s, int k) {
+        int i=0,j=0,c=INT_MIN;
+        vector<char> v;               //Initialize a vector of character.
+        while(j<s.length()){
+            if(s[j]=='a' || s[j]=='e' || s[j]=='i' || s[j]=='o' || s[j]=='u') v.emplace_back(s[j]);  // Check the vowels present in the string and put that in the vector 
+            (Emplace_back works similar to push_back btt faster).
+            if(j-i+1<k) j++;
+            else{
+                int p=v.size();        // Calculate the vector size.
+                c=max(c,p);   
+                if(c!=0)
+                    if(v.front()==s[i]) v.erase(v.begin());   // Remove the calculations of the ith element from the vector when increasing the window.
+                i++;
+                j++;
+            }
+        }
+        return c;
+    }
+};
+
+
+/* In this to calculate the maximum number of vowels for a particular window, store the vomwels in a vector as for any window the length of the vector will be the maximum 
+number of vowels. Also after sliding the window we remove the calcuations for the ith element hence removing ambiguity.*/
