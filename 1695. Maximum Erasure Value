@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int maximumUniqueSubarray(vector<int>& nums) {
+        int ans=0,i=0,s=0;
+        unordered_map<int,int>mp;           // Initialize the map to store the values.
+        for(int j=0;j<nums.size();j++){
+            mp[nums[j]]++;                  //Increase the value for every character encountered.
+            while(mp[nums[j]]>1&&i<j){      //When duplicate character is encounterd then we need to produce the result.
+                mp[nums[i]]--;
+                s-=nums[i];                 // Reduce the previous calculations of the removed element.
+                i++;                        //Increase the window size.
+            }             
+            s+=nums[j];                    //Add the new character in the sum.         
+            ans=max(ans,s);                //Store the maximum value in the ans varaible.
+        }
+        return ans;                        
+    }
+};
