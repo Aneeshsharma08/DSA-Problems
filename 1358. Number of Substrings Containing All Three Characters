@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int numberOfSubstrings(string s) {
+        int ans = 0;
+        unordered_map<char, int> mp;
+        for(int end = 0, start = 0; end < s.length(); end++) {
+            mp[s[end]]++;                                  //Update the map values as the character is encountered.
+            while(mp.size() >= 3) {                        //While the map size remaains three the required conditions are met.
+                mp[s[start]]--;
+                if(!mp[s[start]]) mp.erase(s[start]);     //if character value reqahes xero remove that key from the map.
+                start++;
+            }
+            ans += start;                                 //Add the start the value ton the final variable to count the every window and required subarray. 
+        }
+        return ans;
+    }
+};
+
+/* consider string "abcabc" and window size reaches 3 means j is at c and i is at a.
+so when occurence of a reduced from the map(line 9) so start becomes 1.
+when b is removed so since the subarray bca as well as abca constains abc so we add start everytime to compensate the overhead of counting every subarray.
+*/
