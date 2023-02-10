@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int i=0,j=0,c=0,m=0;
+        unordered_map<int,int> mp;
+        while(j<s.length()){
+            mp[s[j]]++;
+            if(mp.size()==j-i+1) c=max(c,j-i+1);
+            else{
+                while(mp.size()<j-i+1){
+                    mp[s[i]]--;
+                    if(mp[s[i]]==0) mp.erase(s[i]);
+                    i++;
+                }
+            }
+            j++;
+        }
+        return c;
+    }
+};
+
+/* Another sliding window problem with slight variation of unknown window size and to appraoch the problem we use hashmap.
+
+The main motive of using hashmap is to find the unique characters and better than set because we need to use the frequency in sliding the window.
+
+The main catch of the problem is the observation that at any point of time the longest substring without repetition is the substring having all unique characters so we 
+use hashmap, after this how can we know the number of unique characters in a substring at any point, so for this we use window size as a point of reference.
+
+Eg. s=pwwekew
+ 1- At index zero mapsize will be 1 as only p will be in the window and window size will also be one, at index 2 mapsize will become 2 as w will also come and window size
+ will also be 2, btt at index 3 the mapsize will remain 2 btt window size will become 3 so now we know a repeated character has been encountered so we need to shrink the
+ current window till window size become equal to mapsize.
