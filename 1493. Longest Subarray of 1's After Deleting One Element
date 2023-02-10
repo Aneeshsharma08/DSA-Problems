@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int longestSubarray(vector<int>& nums) {
+        int i=0,j=0,c=0,l=0;
+        while(j<nums.size()){
+            if(nums[j]==0) c++;               //if the element is zero increment the counter as only one zero can be taken in the window.
+            while(c>1){                       //if counter exceeds i.e another zero had been encounterd so we slide our window.
+                if(nums[i]==0) c--;           //if the removed element is zero so we reduce the counter of zeros as there ain't any zeros present in the current window.
+                i++;                          //slide the window.
+            }
+            l=max(l,j-i);                     //Calculate the maximum.
+            j++;
+        }
+        return l;                             //Return the maximum.
+    }
+};
+
+
+/* According to the problem statement we can delete only one element ans also the array contains 1's and 0's so following scenerios will arise.
+
+1- All 0's so the answer will always be 0.
+
+2- All 1's the answer will be number of 1's-1.
+
+3- Other cases can be handled using sliding window approach, we can make a window and make a counter for 0's in our window so at any moment of time we can calculate the
+ maximum length subarray considering one element to be deleted is a zero.
+ For eg. a=[0,1,1,1,0,1,1,0,1] since we can delete only one element and more specifically zero so we count the number of zeroes in the window and if that exceeds one we 
+ slide our window and store the maximum in the process as the maximum will always be the difference of the pointers.
+ 
+ for this at index 0 counter will be 1 so length will be 3 till index 4, as another zero is encountered we slide our window and next maximum will be 5 till index 7 
+ and we can't find any subarray more than 5 so we return 5 as answer.
+ 
+ To understand the working kindly look at the comments in the above code.
+ 
+ Note:- Cases 1 and 2 are hanndled internally in this appraoch so no additonal conditions are required to handle those edge cases.
+ */
