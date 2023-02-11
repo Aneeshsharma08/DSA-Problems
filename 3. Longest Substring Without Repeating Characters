@@ -4,18 +4,19 @@ public:
         int i=0,j=0,c=0,m=0;
         unordered_map<int,int> mp;
         while(j<s.length()){
-            mp[s[j]]++;
-            if(mp.size()==j-i+1) c=max(c,j-i+1);
+            mp[s[j]]++;                                 //Store the character encountered in a map.
+            if(mp.size()==j-i+1) c=max(c,j-i+1);        //Compare the mapsize with window size to find the number of unique characters in the window, as mapsize will be
+                                                          calculated by number of characters with frequency 1 and requirement is to have all unique characters.
             else{
-                while(mp.size()<j-i+1){
-                    mp[s[i]]--;
-                    if(mp[s[i]]==0) mp.erase(s[i]);
+                while(mp.size()<j-i+1){                //When window exceeds mapsize that means we've encountered a repetition so now we need to shrink the window.
+                    mp[s[i]]--;                        //Decrement the map frequency of the i'th element.
+                    if(mp[s[i]]==0) mp.erase(s[i]);    //When frequency becomes zero remove that element to reduce the mapsize.
                     i++;
                 }
             }
             j++;
         }
-        return c;
+        return c;                                   //Calculate the value as window size i.e window has all unique characters.
     }
 };
 
@@ -30,3 +31,4 @@ Eg. s=pwwekew
  1- At index zero mapsize will be 1 as only p will be in the window and window size will also be one, at index 2 mapsize will become 2 as w will also come and window size
  will also be 2, btt at index 3 the mapsize will remain 2 btt window size will become 3 so now we know a repeated character has been encountered so we need to shrink the
  current window till window size become equal to mapsize.
+ */
