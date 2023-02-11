@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int maxConsecutiveAnswers(string s, int k) {
+        int i=0,j=0,c1=0,c2=0,m1=0,m2=0,m=0;
+        while(j<s.length()){
+            if(s[j]=='F') c1++;              //For calculating the maximum substring for 'T' we count the number of 'F'. 
+            if(c1<=k) m1=max(m1,j-i+1);      //if the count is less than or equal to k we calculate the answer using the window size.
+            else{
+                while(c1>k){                 //When count exceeds k we shrink the window size.
+                    if(s[i]=='F') c1--;
+                    i++;
+                }
+            }
+            j++;
+        }
+        j=0;                                //Reset the pointers.
+        i=0;
+        
+        //Simmilar ca;culations done for 'F' considering 'T'.
+        
+        while(j<s.length()){
+            if(s[j]=='T') c2++;
+            if(c2<=k) m2=max(m2,j-i+1);
+            else{
+                while(c2>k){
+                    if(s[i]=='T') c2--;
+                    i++;
+                }
+            }
+            j++;
+        }
+        return max(m1,m2);                 //Return the maximum of the both possible substrings.
+    }
+};
+
+*/ Not the best approach btt a pretty simple appraoch of applying the variable sliding window technique twice for both 'F' and 'T' and calcute the maximum substring./*
