@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) {
+        int i=0,j=0,c=0,m=0;
+        while(j<nums.size()){
+            if(nums[j]==0) c++;              //When a 0 is encountered we increment the counter.
+            if(c<=k) m=max(m,j-i+1);         //When counter equal to k we can calcute the answer until counter doesn't exceeds k.
+            else{
+                while(c>k){                  //When counter exceeds k we reduce the 0 counter and shrink the window size.
+                    if(nums[i]==0) c--;
+                    i++;
+                }
+            }
+            j++;
+        }
+        return m;                           //We use window size to calcute the maximum value and return the answer.
+    }
+};
+
+*/ According to the given problem statement the maximum count of 1's are required and k 0's can be deleted.
+
+so we count the number of 0's and when this counter exceeds k we start to reduce the window size and calculate the maximum value.
+/*
