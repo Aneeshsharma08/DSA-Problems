@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int solve(int n,int k){
+        if(n==1) return 0;              // Base case when only one friend is left.
+        return (solve(n-1,k)+k)%n;      // Recursive call for n-1 until it reaches base case , add k n-1 times  and modulus to produce results in range.
+    }
+    int findTheWinner(int n, int k) {
+        int res=solve(n,k)+1;           // Add 1 in the result since modulus gives results from 0 to n-1.
+        return res;
+    }
+};
+
+
+/* As the question says if you're at start position after k steps remove that friend from the circle and move the pointer to the next person and continue this until 
+only one friend remains.
+
+So basically this question is based on observartion , considering k=2
+1- There's only one friend -> Answer will be 1.
+2- If there are two friends -> So we start with 1 so count first at 1 and second at 2 and remove 2 so answer is 1.
+3- If there are three friends-> So first we remove 2 and pointer will be at 3, again count so we remove 1 and answer we get is 3.
+4- If there are four friends-> So first remove 2 and then we remove 4 and then we remove 3 (count 2 steps starting from where you're)
+5- If there are five friends-> So first remove 2, then 4,then 1,then 5 so answer will be 3.
+
+
+The thing to observe is that whether each case is dependent on the previous case like,
+
+for n=2 whether it depends on n=1 
+so for this we observe that we are getting one friend in the end, and for that we need to count k for n-1 times to eliminate 
+all the other friends in the circle, also since we are moving in a circular pattern so counting k n-1 times might go out of bound for eg.
+for n=2 we check result for n=1 i.e 1 and add k=2 in that, so the resultant value is 3 btt we only have 2 friends so we use mod with n in order to tackle this problem. 
+
+for n=3 whether it depends on n=2 i.e for n=2 ans is 1 and we add k and modulus results in 3.
+similarly for n=4 we check for n=3 so (3+2)%3=2 so since modulus gives 0 in results we add 1 for correct results.
+
+*/
