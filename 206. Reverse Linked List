@@ -1,0 +1,34 @@
+class Solution {
+public:
+    ListNode* reverseList(ListNode* &head) {
+        if (!head || !head->next)              //Base case for the last node.
+        {
+            return head;
+        }
+        ListNode *t = reverseList(head->next);   // Recursive call until we reach last node.
+        head->next->next = head;                 // Change the pointer of the node next to the head.
+        head->next = NULL;                       // Change the current head to null.
+
+        return t;                                // Return t as the new head in reversed linked list.
+    }
+};
+
+
+*/ One of the easiest problems on recursion btt crucial for understanding the function calls.
+In this approach we recursively reach to the end node of the linked list (line 8) and return the last node as t to second last node.
+Then in next two lines we are changing the pointers of the nodes.
+
+In line 9, the current head i.e second last node we change the pointer of node next to it i.e last node to the current head.
+
+In line 10, the current head will point to null.
+
+As we change this pointer in the next call for previous node.
+
+Simulation:-
+Initially list is- 1->2->3->4->null
+after reaching 4 we return t to node 3.
+so current head is 3, so head->next will be 4 and node 4->next is null, so we change that to current head i.e 3
+so list looks like this, 1->2->3->null and 3<-4 so we recursively change each pointer,
+1->2->null and 2<-3<-4 and 1->null and 1<-2<-3<-4.
+so we finally reverser the list, 4->3->2->1->null.
+/*
