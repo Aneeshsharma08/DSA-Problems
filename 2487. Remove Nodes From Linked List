@@ -1,0 +1,43 @@
+// Iterative Approach by reversing the list.
+
+class Solution {
+public:
+    ListNode* reverse(ListNode* &head) {
+        if (!head || !head->next)
+        {
+            return head;
+        }
+        ListNode *t = reverse(head->next);
+        head->next->next = head;
+        head->next = NULL;
+
+        return t;
+    }
+    ListNode* removeNodes(ListNode* head) {
+        head = reverse(head);                     // Call the reverse function to reverse the list.
+        int m=head->val;                          // Store the value of head in a variable.
+        ListNode * t = head;                      // Take a pointer on head for reversing the list in the last.
+        ListNode * prev = head;                   // Take a pointer on the head of the reversed list.
+        head=head->next;                          // Move the head to the next node and work on the two pointer appraoch.
+        while(head){
+            if(head->val>=m){                     // If next node value is greater than m i.e previous included node then update the value of m,
+                                                     and move prev to current head and move the head pointer to next node. (prev represents included nodes)
+                m=head->val;
+                prev=head;
+                head=head->next;
+            }
+            else{
+                prev->next=head->next;            // If value is smaller then move prev to next node of the skipped node and move head to the next node.
+                head=head->next;
+            }
+        }
+        head=reverse(t);                          // Finally reverse the list using the pointer t.
+        return head;                              // Return the head of the again reversed list.
+    }
+};
+
+*/ Appraoch is Quite simple
+1- Reverse the linked list.
+store the value of the last node of the list(head) in a variable, compare this with the next nodes if value is greater add them to the list, if not move the pointer.
+Reverse the list again to return the first node.
+/*
