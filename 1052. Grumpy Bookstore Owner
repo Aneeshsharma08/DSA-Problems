@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int maxSatisfied(vector<int>& customers, vector<int>& grumpy, int minutes) 
+    {
+        int sum=0,mx=0,i=0,j=0;
+        for(int i=0;i<customers.size();i++)                // If the owner isn't grumpy then all the customers will be satisfied.
+            if(grumpy[i]==0)sum+=customers[i];
+
+        while(j<customers.size())
+        {
+            if(grumpy[j]==1)sum+=customers[j];            // If the owner is grumpy then we add that value considering the current window size.
+            if(j-i+1 == minutes)                          // If window size exceeds given time.
+            {
+                mx=max(mx,sum);                           // We calculate the possile answer.
+                if(grumpy[i]==1)sum-=customers[i];        // Remove all the previous calculations.
+                i++;
+            }
+            j++;
+        }
+        return mx;
+    }
+};
+
+/* Since the requirement is to return the maximum number of satisfied customers, we can appraoch the problem in such a way like,
+
+1- when the owner is not grumpy , then all the custoers that will come they'll be satisfied. So we check in the grumpy array if the value
+   is ewual to 1 so we'll add up all the values where the owner isn't grumpy.
+   
+2- When the owner is grumpy we make our window size equal to the given minutes, then we calculate the maximum sum i.e maximum satisfied customers.
+
+*/
