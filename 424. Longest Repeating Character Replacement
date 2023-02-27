@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        unordered_map<char,int> mp;          // Initialize the hashmap.
+        int i = 0,j=0,m=0,p=0;               // Initialize the variables to find the current maximum.
+        while(j<s.length())
+        {
+            mp[s[j]]++;                      // Add the character in the hashmap.
+            p=max(p,mp[s[j]]);               // Calculate the maximum frequency of the characters.
+
+            if(j-i+1-p>k)                    // If the number of characters that need to be converted are more than k then increase the current window and 
+                                                reduce the ith character from the map.
+            {
+                mp[s[i]]--;
+                i++;
+            }
+            m = max(m,j-i+1);                // Calcute the maximum value as current windoww will have the longest character replacemnt.
+            j++;
+        }
+        return m;
+    }
+};
+
+/* 
+As the question states calculates the maximum length of the repeating characters so we need to find the maximum frequency of the characters.
+So first we store the character count in the hashmap, the store the maximum character count in a variable (in this p).
+
+Then we calculate the number of characters that must be changed in order to form longest repeating string, so window size having maximum frequncy count,
+if we subtract the p value from window size , then we'll get number of unwanted characters , if that exceeds given k , then we need to reduce our window size.
+
+Store the window size in order to produce the maximum value as answer.
+
+Eg. "AABABBA" so i=0 and j=0,
+initially map has one A, so p=1, and j-i+1-p=0 which is less than k so m=1.
+then p=2 so j-i+1-p=0 which is less than k so m=2.
+then p=2 as count of A> count of B , also j-i+1=1 which is equal to k, so m=3.
+then p=3 and j-i+1=1 which is equal to k so m=4.
+then p=3 and j-i+1=2 which is greater than k so answer remains 4 which is maximum.
+
+*/
